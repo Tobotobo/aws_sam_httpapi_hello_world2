@@ -3,6 +3,7 @@
   "image": "mcr.microsoft.com/devcontainers/base:bullseye",
   "remoteUser": "vscode",
   "remoteEnv": {
+    "SAM_CLI_TELEMETRY": "0",
     "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}" // ローカルのワークスペースフォルダを指定
   },
   // ビルド時にしか反映されないのでコメントアウト

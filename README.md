@@ -33,7 +33,7 @@ Docker version 28.0.1, build 068a01e
 ### 開発コンテナの起動
 * Docker が必要。
 * インストールしていない場合は VSCode の拡張機能の `Remote Development` をインストールする。
-* VSCode でフォルダを開いた際に以下のメッセージが表示された場合は、コンテナーで再度開く をクリックする。
+* VSCode でフォルダを開いた際に以下のメッセージが表示された場合は、コンテナーで再度開く をクリックする。  
   ![alt text](docs/images/image-1.png)
 * 表示されない場合は `Ctrl + Shift + P` または画面上部の検索から コマンドの表示と実行 をクリックする。
   ![alt text](docs/images/image-2.png)
@@ -116,8 +116,8 @@ sam build --use-container HelloJavaFunction
 sam local invoke HelloJavaFunction
 ```
 留意点
-* Java のビルドで --mount-with WRITE をつけると Gradle が Failed to load native library 'libnative-platform.so' for Linux amd64. エラーになってビルドできない。
-* Infrastructure Composer が生成した java21 のテンプレでは、実行時に Handler が見つからず java.lang.ClassNotFoundException が発生する。  
+* Java のビルドで `--mount-with WRITE` をつけると Gradle が `Failed to load native library 'libnative-platform.so' for Linux amd64.` エラーになってビルドできない。
+* Infrastructure Composer が生成した java21 のテンプレでは、実行時に Handler が見つからず `java.lang.ClassNotFoundException` が発生する。  
   テンプレは無名パッケージになっているが、どうやっても無名パッケージのままでは Handler が見つけられないので、Handler.java に `package awslambda.javagradle;` を追加し、template.yaml は `Handler: awslambda.javagradle.Handler::handler` にしてパッケージ名を明示する。
 
 ### デプロイ
