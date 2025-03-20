@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  HelloWorldHttpApi:
+    Type: AWS::Serverless::HttpApi
+
+  HelloNodeJSFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/HelloNodeJSFunction
+      Handler: index.handler
+      Runtime: nodejs22.x
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Timeout: 10
+      Events:
+        HelloWorldHttpApiGETRoot:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HelloWorldHttpApi
+            Path: /
+            Method: GET
+        HelloWorldHttpApiGET:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HelloWorldHttpApi
+            Path: /nodejs
+            Method: GET
+
+  HelloPythonFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/HelloPythonFunction
+      Handler: handler.handler
+      Runtime: python3.13
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Timeout: 10
+      Events:
+        HelloWorldHttpApiGET:
+          Type: HttpApi
+          Properties:
+            Path: /python
+            Method: GET
+            ApiId: !Ref HelloWorldHttpApi
+
+  HelloDotnetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/HelloDotnetFunction
+      Handler: Function::Function.Function::FunctionHandler
+      Runtime: dotnet8
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Timeout: 10
+      Events:
+        HelloWorldHttpApiGET:
+          Type: HttpApi
+          Properties:
+            Path: /dotnet
+            Method: GET
+            ApiId: !Ref HelloWorldHttpApi
+    Metadata:
+      BuildMethod: makefile
+
+  HelloJavaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/HelloJavaFunction
+      Handler: awslambda.javagradle.Handler::handler
+      Runtime: java21
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Timeout: 10
+      Events:
+        HelloWorldHttpApiGET:
+          Type: HttpApi
+          Properties:
+            Path: /java
+            Method: GET
+            ApiId: !Ref HelloWorldHttpApi
+
+Outputs:
+  HelloWorldHttpApi:
+    Description: Endpoint URL
+    Value: !Sub https://${HelloWorldHttpApi}.execute-api.${AWS::Region}.amazonaws.com/

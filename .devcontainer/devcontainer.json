@@ -1,0 +1,31 @@
+{
+  "name": "AWS SAM 開発コンテナ",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "remoteUser": "vscode",
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}" // ローカルのワークスペースフォルダを指定
+  },
+  // ビルド時にしか反映されないのでコメントアウト
+  // "runArgs": [
+  //   "--env-file",
+  //   ".env"
+  // ],
+  "mounts": [], // Volumeマウントの設定
+  "features": { // コンテナに追加したい機能の設定
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2.12.0": {},
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/customink/codespaces-features/sam-cli:1": {}
+  },
+  "customizations": { // コンテナ内のVSCodeに適用するエディタなどの設定
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file"
+      },
+      "extensions": [
+        "amazonwebservices.aws-toolkit-vscode"
+      ]
+    }
+  }
+}
