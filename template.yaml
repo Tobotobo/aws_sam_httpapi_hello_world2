@@ -85,6 +85,24 @@ Resources:
             Method: GET
             ApiId: !Ref HelloWorldHttpApi
 
+  HelloRubyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/HelloRubyFunction
+      Handler: function.handler
+      Runtime: ruby3.3
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Timeout: 10
+      Events:
+        HelloWorldHttpApiGET:
+          Type: HttpApi
+          Properties:
+            Path: /ruby
+            Method: GET
+            ApiId: !Ref HelloWorldHttpApi
+
 Outputs:
   HelloWorldHttpApi:
     Description: Endpoint URL

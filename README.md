@@ -3,7 +3,7 @@
 ## 概要
 * AWS SAM を使ってシンプルな API Gateway HTTP API を構築する。
 * AWS SAM CLI などの実行環境を VSCode の Dev Containers で構築する。
-* NodeJS 以外にも Python, .NET, Java で Lambda 関数を作成してみる。
+* NodeJS 以外にも Python, .NET, Java, Ruby で Lambda 関数を作成してみる。
 * 前回: [aws_sam_httpapi_hello_world](https://github.com/Tobotobo/aws_sam_httpapi_hello_world)
 
 ![alt text](docs/images/infrastructure-composer-template.yaml.png)  
@@ -27,6 +27,7 @@ Docker version 28.0.1, build 068a01e
 * [Python のビルド・実行](#python-のビルド実行)
 * [.NET のビルド・実行](#net-のビルド実行)
 * [Java のビルド・実行](#java-のビルド実行)
+* [Ruby のビルド・実行](#ruby-のビルド実行)
 * [デプロイ](#デプロイ)
 * [スタックを削除](#スタックを削除)
 
@@ -56,6 +57,7 @@ sam local start-api
 * http://127.0.0.1:3000/python
 * http://127.0.0.1:3000/dotnet
 * http://127.0.0.1:3000/java
+* http://127.0.0.1:3000/ruby
 
 留意点
 * ブラウザから URL を叩くと、その URL に対応する Lambda 関数が都度 Docker で実行され結果が返される。
@@ -120,6 +122,19 @@ sam local invoke HelloJavaFunction
 * Infrastructure Composer が生成した java21 のテンプレでは、実行時に Handler が見つからず `java.lang.ClassNotFoundException` が発生する。  
   テンプレは無名パッケージになっているが、どうやっても無名パッケージのままでは Handler が見つけられないので、Handler.java に `package awslambda.javagradle;` を追加し、template.yaml は `Handler: awslambda.javagradle.Handler::handler` にしてパッケージ名を明示する。
 
+### Ruby のビルド・実行
+ビルド
+```
+sam build --use-container HelloRubyFunction
+```
+実行
+```
+sam local invoke HelloRubyFunction
+```
+留意点
+* Infrastructure Composer が生成した ruby3.3 のテンプレでは、`Handler: index.handler` になっているが実行すると `cannot load such file -- index` になる。  
+  `Handler: function.handler` に修正する。  
+
 ### デプロイ
 
 AWS への接続確認
@@ -130,7 +145,6 @@ aws sts get-caller-identity
 * `.env.template` をコピーし `.env` にリネームする。
 * `.env` に接続情報を記述する。
 * `set -a; source .env; set +a;` を実行し現在のシェルに `.env` を環境変数として読み込む。
-
 
 ビルド
 ```
