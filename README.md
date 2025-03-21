@@ -3,8 +3,14 @@
 ## 概要
 * AWS SAM を使ってシンプルな API Gateway HTTP API を構築する。
 * AWS SAM CLI などの実行環境を VSCode の Dev Containers で構築する。
-* NodeJS 以外にも Python, .NET, Java, Ruby, Go で Lambda 関数を作成してみる。
+* NodeJS 以外にも Python, .NET, .NET Native AOT, Java, Ruby, Go で Lambda 関数を作成してみる。
 * 前回: [aws_sam_httpapi_hello_world](https://github.com/Tobotobo/aws_sam_httpapi_hello_world)
+
+サンプルコードを見たいだけなら、いちいち `sam init` するのではなく以下を見た方が早い。 
+
+AWS SAM CLI Application Templates  
+https://github.com/aws/aws-sam-cli-app-templates  
+> このリポジトリには、AWS SAM CLI での sam init 呼び出しに使用されるアプリケーションテンプレートが含まれています。
 
 ![alt text](docs/images/infrastructure-composer-template.yaml.png)  
 ![alt text](docs/images/image.png)
@@ -26,6 +32,7 @@ Docker version 28.0.1, build 068a01e
 * [NodeJS のビルド・実行](#nodejs-のビルド実行)
 * [Python のビルド・実行](#python-のビルド実行)
 * [.NET のビルド・実行](#net-のビルド実行)
+* [.NET Native AOT のビルド・実行](#net-native-aot-のビルド実行)
 * [Java のビルド・実行](#java-のビルド実行)
 * [Ruby のビルド・実行](#ruby-のビルド実行)
 * [Go のビルド・実行](#go-のビルド実行)
@@ -57,6 +64,7 @@ sam local start-api
 * http://127.0.0.1:3000/nodejs
 * http://127.0.0.1:3000/python
 * http://127.0.0.1:3000/dotnet
+* http://127.0.0.1:3000/dotnet-native-aot
 * http://127.0.0.1:3000/java
 * http://127.0.0.1:3000/ruby
 * http://127.0.0.1:3000/go
@@ -108,6 +116,16 @@ sam local invoke HelloDotnetFunction
 * Infrastructure Composer が生成した dotnet8 のテンプレでは、`Handler: bootstrap` になっているが実行すると `Error: executable assembly /var/task/bootstrap.dll or binary /var/task/bootstrap not found.` になる。  
   `Handler: Function::Function.Function::FunctionHandler` に修正する。  
   ※`Handler: DLLファイル名::名前空間.クラス名::メソッド名`
+
+### .NET Native AOT のビルド・実行
+ビルド
+```
+sam build --use-container --cached HelloDotnetNativeAOTFunction
+```
+実行
+```
+sam local invoke HelloDotnetNativeAOTFunction
+```
 
 ### Java のビルド・実行
 ビルド

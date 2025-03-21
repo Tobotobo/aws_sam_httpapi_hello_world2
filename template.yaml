@@ -67,6 +67,26 @@ Resources:
     Metadata:
       BuildMethod: makefile
 
+  HelloDotnetNativeAOTFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/HelloDotnetNativeAOTFunction
+      Handler: bootstrap
+      Runtime: dotnet8
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Timeout: 10
+      Events:
+        HelloWorldHttpApiGET:
+          Type: HttpApi
+          Properties:
+            Path: /dotnet-native-aot
+            Method: GET
+            ApiId: !Ref HelloWorldHttpApi
+    Metadata:
+      BuildMethod: makefile
+
   HelloJavaFunction:
     Type: AWS::Serverless::Function
     Properties:
