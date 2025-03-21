@@ -47,7 +47,7 @@ Docker version 28.0.1, build 068a01e
 ### API Gateway のビルド・実行
 ビルド
 ```
-sam build --use-container
+sam build --use-container --cached
 ```
 起動
 ```
@@ -69,7 +69,7 @@ sam local start-api
 ### NodeJS のビルド・実行
 ビルド
 ```
-sam build --use-container HelloNodeJSFunction
+sam build --use-container --cached HelloNodeJSFunction
 ```
 実行
 ```
@@ -79,7 +79,7 @@ sam local invoke HelloNodeJSFunction
 ### Python のビルド・実行
 ビルド
 ```
-sam build --use-container HelloPythonFunction
+sam build --use-container --cached HelloPythonFunction
 ```
 実行
 ```
@@ -89,7 +89,7 @@ sam local invoke HelloPythonFunction
 ### .NET のビルド・実行
 ビルド
 ```
-sam build --use-container HelloDotnetFunction
+sam build --use-container --cached HelloDotnetFunction
 ```
 実行
 ```
@@ -100,7 +100,6 @@ sam local invoke HelloDotnetFunction
   デフォルトで src は読み取り専用でマウントされるが、.NET は bin や obj を出力するため書き込み許可が求められるものと思われる。 
 * `--mount-with WRITE` を付けても解消するが、結論から言うと `Makefile` を書いた方がよい。  
   Java などこれを付けるとエラーになるものがあり、デプロイ前に全関数を一括でビルドする際、関数ごとに `--mount-with WRITE` は指定できないため、あちらを立てればこちらが立たずで詰んでしまう。　　
-* 一応、`--cache` を工夫して関数を個別にビルドするか、個別にビルドした結果を手動でマージすることで回避できるが、運用が煩雑になるのと、`--cache` の場合は公式の注記でサードパーティーモジュールのバージョン変更など変更として検知されない要素もあるので注意が必要である。
 * `Makefile` で対応する場合は、`template.yaml` に以下を追記しソースと一緒に `Makefile` を配置する。  
   ```yaml
   Metadata:
@@ -113,7 +112,7 @@ sam local invoke HelloDotnetFunction
 ### Java のビルド・実行
 ビルド
 ```
-sam build --use-container HelloJavaFunction
+sam build --use-container --cached HelloJavaFunction
 ```
 実行
 ```
@@ -127,7 +126,7 @@ sam local invoke HelloJavaFunction
 ### Ruby のビルド・実行
 ビルド
 ```
-sam build --use-container HelloRubyFunction
+sam build --use-container --cached HelloRubyFunction
 ```
 実行
 ```
@@ -140,7 +139,7 @@ sam local invoke HelloRubyFunction
 ### Go のビルド・実行
 ビルド
 ```
-sam build --use-container HelloGoFunction
+sam build --use-container --cached HelloGoFunction
 ```
 実行
 ```
@@ -168,7 +167,7 @@ aws sts get-caller-identity
 
 ビルド
 ```
-sam build --use-container
+sam build --use-container --cached
 ```
 デプロイ
 ```
