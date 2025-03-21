@@ -4,16 +4,16 @@
 * AWS SAM を使ってシンプルな API Gateway HTTP API を構築する。
 * AWS SAM CLI などの実行環境を VSCode の Dev Containers で構築する。
 * NodeJS 以外にも Python, .NET, .NET Native AOT, Java, Ruby, Go で Lambda 関数を作成してみる。
-* 前回: [aws_sam_httpapi_hello_world](https://github.com/Tobotobo/aws_sam_httpapi_hello_world)
-
-サンプルコードを見たいだけなら、いちいち `sam init` するのではなく以下を見た方が早い。 
-
-AWS SAM CLI Application Templates  
-https://github.com/aws/aws-sam-cli-app-templates  
-> このリポジトリには、AWS SAM CLI での sam init 呼び出しに使用されるアプリケーションテンプレートが含まれています。
+* 前回: [aws_sam_httpapi_hello_world](https://github.com/Tobotobo/aws_sam_httpapi_hello_world)  
 
 ![alt text](docs/images/infrastructure-composer-template.yaml.png)  
 ![alt text](docs/images/image.png)
+
+## メモ
+* サンプルコードを見たいだけなら、いちいち `sam init` するのではなく以下を見た方が早い。  
+  AWS SAM CLI Application Templates  
+  https://github.com/aws/aws-sam-cli-app-templates  
+  > このリポジトリには、AWS SAM CLI での sam init 呼び出しに使用されるアプリケーションテンプレートが含まれています。
 
 ## 環境情報
 ```
