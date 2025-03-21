@@ -3,7 +3,7 @@
 ## 概要
 * AWS SAM を使ってシンプルな API Gateway HTTP API を構築する。
 * AWS SAM CLI などの実行環境を VSCode の Dev Containers で構築する。
-* NodeJS 以外にも Python, .NET, Java, Ruby で Lambda 関数を作成してみる。
+* NodeJS 以外にも Python, .NET, Java, Ruby, Go で Lambda 関数を作成してみる。
 * 前回: [aws_sam_httpapi_hello_world](https://github.com/Tobotobo/aws_sam_httpapi_hello_world)
 
 ![alt text](docs/images/infrastructure-composer-template.yaml.png)  
@@ -28,6 +28,7 @@ Docker version 28.0.1, build 068a01e
 * [.NET のビルド・実行](#net-のビルド実行)
 * [Java のビルド・実行](#java-のビルド実行)
 * [Ruby のビルド・実行](#ruby-のビルド実行)
+* [Go のビルド・実行](#go-のビルド実行)
 * [デプロイ](#デプロイ)
 * [スタックを削除](#スタックを削除)
 
@@ -36,10 +37,10 @@ Docker version 28.0.1, build 068a01e
 * インストールしていない場合は VSCode の拡張機能の `Remote Development` をインストールする。
 * VSCode でフォルダを開いた際に以下のメッセージが表示された場合は、コンテナーで再度開く をクリックする。  
   ![alt text](docs/images/image-1.png)
-* 表示されない場合は `Ctrl + Shift + P` または画面上部の検索から コマンドの表示と実行 をクリックする。
+* 表示されない場合は `Ctrl + Shift + P` または画面上部の検索から コマンドの表示と実行 をクリックする。  
   ![alt text](docs/images/image-2.png)
 * 開発コンテナー: コンテナーで再度開く をクリック  
-  ※初回はコンテナのビルドで少し時間がかかります。
+  ※初回はコンテナのビルドで少し時間がかかります。  
   ![alt text](docs/images/image-3.png)  
   ![alt text](docs/images/image-4.png)  
 
@@ -58,6 +59,7 @@ sam local start-api
 * http://127.0.0.1:3000/dotnet
 * http://127.0.0.1:3000/java
 * http://127.0.0.1:3000/ruby
+* http://127.0.0.1:3000/go
 
 留意点
 * ブラウザから URL を叩くと、その URL に対応する Lambda 関数が都度 Docker で実行され結果が返される。
@@ -134,6 +136,24 @@ sam local invoke HelloRubyFunction
 留意点
 * Infrastructure Composer が生成した ruby3.3 のテンプレでは、`Handler: index.handler` になっているが実行すると `cannot load such file -- index` になる。  
   `Handler: function.handler` に修正する。  
+
+### Go のビルド・実行
+ビルド
+```
+sam build --use-container HelloGoFunction
+```
+実行
+```
+sam local invoke HelloGoFunction
+```
+留意点
+* Go による Lambda 関数の構築  
+  https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/lambda-golang.html  
+  > Go は、他のマネージドランタイムとは異なる方法で実装されています。Go は実行可能バイナリにネイティブにコンパイルするため、専用の言語ランタイムは必要ありません。Go 関数を Lambda にデプロイするには、OS 専用ランタイム (provided ランタイム ファミリ) を使用します。  
+* `Runtime: provided.al2023` でどうやって Go をビルドするのかと思ったら `Runtime: provided.al2023` には Go が入ってるっぽい。  
+  AL2023 での Go  
+  https://docs.aws.amazon.com/ja_jp/linux/al2023/ug/go.html  
+  > AL2023 Go で独自のコードを作成したい場合は、AL2023 Go に含まれているツールチェーンを使用できます。  
 
 ### デプロイ
 

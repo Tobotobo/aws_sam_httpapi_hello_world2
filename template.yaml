@@ -103,6 +103,26 @@ Resources:
             Method: GET
             ApiId: !Ref HelloWorldHttpApi
 
+  HelloGoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/HelloGoFunction
+      Handler: bootstrap
+      Runtime: provided.al2023
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Timeout: 10
+      Events:
+        HelloWorldHttpApiGET:
+          Type: HttpApi
+          Properties:
+            Path: /go
+            Method: GET
+            ApiId: !Ref HelloWorldHttpApi
+    Metadata:
+      BuildMethod: makefile
+
 Outputs:
   HelloWorldHttpApi:
     Description: Endpoint URL
